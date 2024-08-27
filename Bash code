@@ -1,0 +1,102 @@
+echo "# sysopctl" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/aniketvermaxyz/sysopctl.git
+git push -u origin main
+
+#!/bin/bash
+# sysopctl v0.1.0
+
+if [[ "$1" == "--version" ]]; then
+    echo "sysopctl version 0.1.0"
+    exit 0
+fi
+
+
+Implementing the --help option:
+
+if [[ "$1" == "--help" ]]; then
+    echo "Usage: sysopctl [options] [arguments]"
+    echo "Options:"
+    echo "  --version    Show the version information"
+    echo "  --help       Show this help message"
+    echo "Commands:"
+    echo "  service list      List all active services"
+    echo "  system load       Show current system load averages"
+    echo "  service start     Start a specific service"
+    echo "  service stop      Stop a specific service"
+    echo "  disk usage        Show disk usage statistics"
+    echo "  process monitor   Monitor real-time process activity"
+    echo "  logs analyze      Analyze recent system logs"
+    echo "  backup <path>     Backup system files"
+    exit 0
+fi
+
+
+Listing Running Services
+
+if [[ "$1" == "service" && "$2" == "list" ]]; then
+    systemctl list-units --type=service
+    exit 0
+fi
+
+
+Viewing System Load:
+
+if [[ "$1" == "system" && "$2" == "load" ]]; then
+    uptime
+    exit 0
+fi
+
+
+Managing System Services:
+
+if [[ "$1" == "service" && "$2" == "start" && -n "$3" ]]; then
+    systemctl start "$3"
+    echo "Service $3 started."
+    exit 0
+fi
+
+if [[ "$1" == "service" && "$2" == "stop" && -n "$3" ]]; then
+    systemctl stop "$3"
+    echo "Service $3 stopped."
+    exit 0
+fi
+
+Checking Disk Usage:
+
+if [[ "$1" == "disk" && "$2" == "usage" ]]; then
+    df -h
+    exit 0
+fi
+
+
+Monitoring System Processes:Monitoring System Processes:
+
+if [[ "$1" == "process" && "$2" == "monitor" ]]; then
+    top
+    exit 0
+fi
+
+
+Analyzing System Logs:
+
+if [[ "$1" == "logs" && "$2" == "analyze" ]]; then
+    journalctl -p crit -n 10
+    exit 0
+fi
+
+
+Backing Up System Files:
+
+if [[ "$1" == "backup" && -n "$2" ]]; then
+    rsync -av --progress "$2" /backup/
+    echo "Backup of $2 completed."
+    exit 0
+fi
+
+
+
+
